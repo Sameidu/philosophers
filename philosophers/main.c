@@ -6,11 +6,26 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:39:22 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/02 12:20:20 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/05/02 20:23:22 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	*ft_print_philo(void *node)
+{
+	t_node	*philo;
+
+	philo = node;
+	printf("PHILO THREAD --> %d\n", philo->data->id);
+	printf("next thread --> %d\n", philo->next->data->id);
+	printf("prev thread --> %d\n\n", philo->prev->data->id);
+	// printf("tt_die --> %d \n", philo->data->tt_die);
+	// printf("tt_eat --> %d \n", philo->data->tt_eat);
+	// printf("tt_sleep --> %d \n", philo->data->tt_sleep);
+	// printf("nb_eats --> %d \n\n", philo->data->nb_ph_eat);
+	return (NULL);
+}
 
 t_node	*ft_init_args(int argc, char **argv)
 {
@@ -27,6 +42,7 @@ t_node	*ft_init_args(int argc, char **argv)
 		new_node = ft_create_node(argc, argv, i);
 		if (new_node == NULL)
 			return (NULL);
+		pthread_create(&new_node->philo, NULL, ft_print_philo, new_node);
 		if (node == NULL)
 		{
 			node = new_node;
@@ -51,7 +67,7 @@ int main (int argc, char **argv)
 	t_node	*philo;
 	int	i = 1;
 
-	if ((argc < 5 || argc > 6))
+	if (argc < 5 || argc > 6)
 	{
 		printf("Error: Wrong arguments\n");
 		return (0);
@@ -64,5 +80,6 @@ int main (int argc, char **argv)
 	}
 	philo = ft_init_args(argc, argv);
 	ft_print_lst(philo);
+	sleep(5);
 	return (0);
 }

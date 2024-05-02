@@ -14,9 +14,10 @@ typedef struct s_philo t_philo;
 
 typedef struct s_node
 {
+	pthread_t	philo;
 	t_node	*next;
 	t_node	*prev;
-	t_philo	*philo;
+	t_philo	*data;
 }			t_node;
 
 typedef struct s_philo
