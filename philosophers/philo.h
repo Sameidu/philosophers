@@ -35,5 +35,7 @@ long	ft_atol(char *str);
 t_node	*ft_create_node(int argc, char **argv, int i);
 void	ft_exit(char *str);
 void	ft_print_lst(t_node *head);
+int		ft_isnum(int c);
+int		ft_check_args(char *argv);
 
 #endif

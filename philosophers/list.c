@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 12:02:22 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/04/30 12:26:53 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/05/01 20:12:32 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ t_node	*ft_create_node(int argc, char **argv, int i)
     new->philo->tt_thing = 0;
 	if (argc == 6)
 		new->philo->nb_ph_eat = atol(argv[5]);
+	else
+		new->philo->nb_ph_eat = -1;
 	return (new);
 }
 

@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 10:58:31 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/04/30 10:07:53 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:20:33 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,35 @@ void	ft_exit(char *str)
 {
 	printf("%s\n", str);
 	exit(1);
+}
+
+int	ft_isnum(int c)
+{
+	return(c >= '0' && c <= '9');
+}
+
+int	ft_check_args(char *argv)
+{
+	long	aux;
+	char	*num;
+
+	num = argv;
+	if (!argv)
+		return (0);
+	if (*argv == '-' || *argv == '+')
+		argv++;
+	if (*argv == '\0')
+		return (0);
+	while (*argv != '\0')
+	{
+		if (!ft_isnum(*argv))
+			return (0);
+		argv++;
+	}
+	aux = ft_atol(num);
+	if (aux > INT_MAX || aux < INT_MIN)
+		return (0);
+	return (1);
 }
 
 long	ft_atol(char *str)
