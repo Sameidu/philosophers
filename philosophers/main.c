@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:39:22 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/02 20:23:22 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/05/07 13:35:57 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,66 +20,52 @@ void	*ft_print_philo(void *node)
 	printf("PHILO THREAD --> %d\n", philo->data->id);
 	printf("next thread --> %d\n", philo->next->data->id);
 	printf("prev thread --> %d\n\n", philo->prev->data->id);
-	// printf("tt_die --> %d \n", philo->data->tt_die);
-	// printf("tt_eat --> %d \n", philo->data->tt_eat);
-	// printf("tt_sleep --> %d \n", philo->data->tt_sleep);
-	// printf("nb_eats --> %d \n\n", philo->data->nb_ph_eat);
 	return (NULL);
 }
 
-t_node	*ft_init_args(int argc, char **argv)
+void	ft_check_args(int argc, char **argv)
 {
 	int	i;
-	int	nb_philo;
-	t_node	*new_node;
-	t_node	*node;
+	int	j;
 
+	if (argc < 5 || argc > 6)
+		ft_exit("Error: Wrong number of arguments");
 	i = 1;
-	node = NULL;
-	nb_philo = ft_atol(argv[1]);
-	while (nb_philo > 0)
+	while (i < argc)
 	{
-		new_node = ft_create_node(argc, argv, i);
-		if (new_node == NULL)
-			return (NULL);
-		pthread_create(&new_node->philo, NULL, ft_print_philo, new_node);
-		if (node == NULL)
+		j = 0;
+		while (argv[i][j])
 		{
-			node = new_node;
-			node->next = node;
-			node->prev = node;
+			if (!ft_isnum(argv[i][j]))
+				ft_exit("Error: Arguments must be only unsigned numbers");
+			j++;
 		}
-		else
-		{
-			new_node->prev = node->prev;
-			new_node->next = node;
-			node->prev->next = new_node;
-			node->prev = new_node;
-		}
-		nb_philo--;
 		i++;
 	}
-	return (node);
 }
 
 int main (int argc, char **argv)
 {
 	t_node	*philo;
-	int	i = 1;
+	t_node	*tmp;
 
-	if (argc < 5 || argc > 6)
-	{
-		printf("Error: Wrong arguments\n");
-		return (0);
-	}
-	while (argv[i])
-	{
-		if (!ft_check_args(argv[i]))
-			ft_exit("Error: Not a number");
-		i++;
-	}
+	ft_check_args(argc, argv);
 	philo = ft_init_args(argc, argv);
-	ft_print_lst(philo);
-	sleep(5);
+	tmp = philo;
+	while (tmp->next)
+	{
+		pthread_create(&tmp->philo, NULL, ft_print_philo, tmp);
+		tmp = tmp->next;
+		if (tmp == philo)
+			break;
+	}
+	tmp = philo;
+	while (tmp->next)
+	{
+		pthread_join(tmp->philo, NULL);
+		tmp = tmp->next;
+		if (tmp == philo)
+			break;
+	}
 	return (0);
 }
