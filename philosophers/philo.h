@@ -14,7 +14,7 @@ typedef struct s_philo t_philo;
 
 typedef struct s_node
 {
-	pthread_t	philo;
+	pthread_t	thread;
 	t_node	*next;
 	t_node	*prev;
 	t_philo	*data;
@@ -31,10 +31,11 @@ typedef struct s_philo
 	int	nb_ph_eat;
 }		t_philo;
 
-//UTILS
+// UTILS
 long	ft_atol(char *str);
-void	ft_exit(char *str);
-t_node *ft_init_args(int argc, char **argv);
 int		ft_isnum(int c);
+int		ft_error(t_node *node, char *str);
 
+// LIST
+t_node	*ft_init_args(int argc, char **argv);
 #endif

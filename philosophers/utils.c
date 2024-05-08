@@ -6,18 +6,27 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 10:58:31 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/07 13:32:07 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/05/08 12:50:20 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-//Hacer un ft_exit para salir del programa y liberar memoria
-
-void	ft_exit(char *str)
+int    ft_error(t_node *node, char *str)
 {
-	printf("%s\n", str);
-	exit(1);
+    t_node *tmp;
+
+    tmp = node;
+    while (node)
+    {
+        tmp = node->next;
+		if (node->data)
+        	free(node->data);
+        free(node);
+        node = tmp;
+    }
+    printf("%s\n", str);
+    return (1);
 }
 
 int	ft_isnum(int c)
@@ -33,15 +42,15 @@ long	ft_atol(char *str)
 	i = 0;
 	nb = 0;
 	if (str[i] == '\0')
-		ft_exit("Error: Argument is empty");
+		return (ft_error(NULL, "Error: Argument is empty"), -1);
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		nb = nb * 10 + (str[i] - '0');
 		if (nb < INT_MIN || nb > INT_MAX)
-			ft_exit("Error: Argument is not within de range of int");
+			return (ft_error(NULL, "Error: Argument is out of range"), -1);
 		i++;
 	}
 	if (str[i] != '\0')
-		printf("Error: Argument is not a valid number\n");
+		return (-1);
 	return (nb);
 }
