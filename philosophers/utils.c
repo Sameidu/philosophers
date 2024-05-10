@@ -6,24 +6,18 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 10:58:31 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/08 12:50:20 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/05/10 09:25:15 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int    ft_error(t_node *node, char *str)
+int    ft_error(t_philo *node, char *str)
 {
-    t_node *tmp;
-
-    tmp = node;
     while (node)
     {
-        tmp = node->next;
-		if (node->data)
-        	free(node->data);
-        free(node);
-        node = tmp;
+		if (node)
+        	free(node);
     }
     printf("%s\n", str);
     return (1);

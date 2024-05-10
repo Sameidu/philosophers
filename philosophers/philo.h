@@ -9,19 +9,11 @@
 # include <sys/time.h>
 # include <limits.h>
 
-typedef struct s_node t_node;
-typedef struct s_philo t_philo;
-
-typedef struct s_node
-{
-	pthread_t	thread;
-	t_node	*next;
-	t_node	*prev;
-	t_philo	*data;
-}			t_node;
-
 typedef struct s_philo
 {
+	pthread_t	thread;
+	pthread_mutex_t	*left;
+	pthread_mutex_t	*right;
 	int	id;
 	int	nb_philo;
 	int	tt_die;
@@ -34,8 +26,8 @@ typedef struct s_philo
 // UTILS
 long	ft_atol(char *str);
 int		ft_isnum(int c);
-int		ft_error(t_node *node, char *str);
+int		ft_error(t_philo *node, char *str);
 
 // LIST
-t_node	*ft_init_args(int argc, char **argv);
+t_philo	*ft_init_args(int argc, char **argv, pthread_mutex_t *fork);
 #endif

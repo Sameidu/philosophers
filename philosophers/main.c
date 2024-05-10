@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:39:22 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/08 12:49:19 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/05/10 13:24:24 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 
 void	*ft_print_philo(void *node)
 {
-	t_node	*philo;
+	t_philo	*philo;
 
 	philo = node;
-	printf("PHILO THREAD --> %d\n", philo->data->id);
-	printf("next thread --> %d\n", philo->next->data->id);
-	printf("prev thread --> %d\n\n", philo->prev->data->id);
+	printf("PHILO THREAD --> %d\nRight fork --> %p\nLeft fork --> %p\n\n",
+	philo->id, philo->right, philo->left);
 	return (NULL);
 }
 
@@ -42,49 +41,70 @@ int	ft_check_args(int argc, char **argv)
 		}
 		i++;
 	}
+	if (ft_atol(argv[1]) <= 1 || ft_atol(argv[1]) > 200)
+		return (ft_error(NULL, "Error: Number of philosophers is not between 1 and 200"), 1);
+	if (ft_atol(argv[2]) < 60 || ft_atol(argv[3]) < 60 || ft_atol(argv[4]) < 60)
+		return (ft_error(NULL, "Error: Time to die, eat or sleep is less than 60"), 1);
+	if (argc == 6 && (ft_atol(argv[5]) < 1 || ft_atol(argv[5]) > INT_MAX))
+		return (ft_error(NULL, "Error: Number of times to eat is not between 1 and INT_MAX"), 1);
 	return (0);
 }
+
 void	leaks(void)
 {
 	system("leaks -q philo");
 }
 
-int main (int argc, char **argv)
+pthread_mutex_t	*ft_init_fork(int nb)
 {
-	t_node	*philo;
-	t_node	*tmp;
+	pthread_mutex_t	*fork;
+	int		i;
+
+	fork = (pthread_mutex_t *)malloc(nb * sizeof(pthread_mutex_t));
+	if (!fork)
+		return (NULL);
+	i = 0;
+	while (i < nb)
+	{
+		pthread_mutex_init(&fork[i], NULL);
+		i++;
+	}
+	return (fork);
+}
+int	main(int argc, char **argv)
+{
+	pthread_mutex_t	*fork;
+	t_philo	*philo;
+	int		i;
 
 	atexit(leaks);
 	if (ft_check_args(argc, argv) == 1)
 		return (1);
-	philo = ft_init_args(argc, argv);
+	fork = ft_init_fork(ft_atol(argv[1]));
+	if (!fork)
+		return (ft_error(NULL, "Error: Could not initialize forks"), 1);
+	philo = ft_init_args(argc, argv, fork);
 	if (!philo)
 		return (ft_error(NULL, "Error: Could not initialize arguments"), 1);
-	tmp = philo;
-	while (tmp->next)
+	i = 0;
+	while (i < ft_atol(argv[1]))
 	{
-		pthread_create(&tmp->thread, NULL, ft_print_philo, tmp);
-		tmp = tmp->next;
-		if (tmp == philo)
-			break;
+		pthread_create(&(philo[i].thread), NULL, ft_print_philo, &(philo[i]));
+		i++;
 	}
-	tmp = philo;
-	while (tmp->next)
+	i = 0;
+	while (i < ft_atol(argv[1]))
+	{	
+		pthread_join(philo[i].thread, NULL);
+		i++;
+	}
+	i = 0;
+	while (i < ft_atol(argv[1]))
 	{
-		pthread_join(tmp->thread, NULL);
-		tmp = tmp->next;
-		if (tmp == philo)
-			break;
+		pthread_mutex_destroy(&fork[i]);
+		i++;
 	}
-	tmp = philo;
-	while (tmp->next)
-	{
-		free(tmp->data);
-		free(tmp);
-		tmp = tmp->next;
-		if (tmp == philo)
-			break;
-	}
-	printf("All threads have finished\n");
+	free(fork);
+	free(philo);
 	return (0);
 }
