@@ -27,7 +27,15 @@ typedef struct s_philo
 long	ft_atol(char *str);
 int		ft_isnum(int c);
 int		ft_error(t_philo *node, char *str);
+void	*ft_print_philo(void *node);
 
 // LIST
 t_philo	*ft_init_args(int argc, char **argv, pthread_mutex_t *fork);
+
+// INIT
+pthread_mutex_t	*ft_init_fork(int nb);
+void	ft_init_threads(t_philo *philo);
+void	ft_wait_threads(t_philo *philo);
+void	ft_destroy_mutex(pthread_mutex_t *fork, int nb);
+
 #endif

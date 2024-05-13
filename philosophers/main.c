@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:39:22 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/10 13:24:24 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/05/13 13:11:46 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,27 +55,10 @@ void	leaks(void)
 	system("leaks -q philo");
 }
 
-pthread_mutex_t	*ft_init_fork(int nb)
-{
-	pthread_mutex_t	*fork;
-	int		i;
-
-	fork = (pthread_mutex_t *)malloc(nb * sizeof(pthread_mutex_t));
-	if (!fork)
-		return (NULL);
-	i = 0;
-	while (i < nb)
-	{
-		pthread_mutex_init(&fork[i], NULL);
-		i++;
-	}
-	return (fork);
-}
 int	main(int argc, char **argv)
 {
 	pthread_mutex_t	*fork;
 	t_philo	*philo;
-	int		i;
 
 	atexit(leaks);
 	if (ft_check_args(argc, argv) == 1)
@@ -86,24 +69,9 @@ int	main(int argc, char **argv)
 	philo = ft_init_args(argc, argv, fork);
 	if (!philo)
 		return (ft_error(NULL, "Error: Could not initialize arguments"), 1);
-	i = 0;
-	while (i < ft_atol(argv[1]))
-	{
-		pthread_create(&(philo[i].thread), NULL, ft_print_philo, &(philo[i]));
-		i++;
-	}
-	i = 0;
-	while (i < ft_atol(argv[1]))
-	{	
-		pthread_join(philo[i].thread, NULL);
-		i++;
-	}
-	i = 0;
-	while (i < ft_atol(argv[1]))
-	{
-		pthread_mutex_destroy(&fork[i]);
-		i++;
-	}
+	ft_init_threads(philo);
+	ft_wait_threads(philo);
+	ft_destroy_mutex(fork, ft_atol(argv[1]));
 	free(fork);
 	free(philo);
 	return (0);
