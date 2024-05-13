@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 12:02:22 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/13 13:12:36 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/05/13 21:23:07 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,14 @@ void    ft_save_philo(t_philo *node, int i, char **argv, int argc)
     node[i].tt_eat = ft_atol(argv[3]);
     node[i].tt_sleep = ft_atol(argv[4]);
     node[i].tt_thing = 0;
+    gettimeofday(&node[i].start, NULL);
 	if (argc == 6)
         node[i].nb_ph_eat = ft_atol(argv[5]);
 	else
 		node[i].nb_ph_eat = -1;
 }
 
-t_philo *ft_init_args(int argc, char **argv, pthread_mutex_t *fork)
+t_philo *ft_init_args(int argc, char **argv, pthread_mutex_t *forks)
 {
     int i;
     int nb_philo;
@@ -46,8 +47,8 @@ t_philo *ft_init_args(int argc, char **argv, pthread_mutex_t *fork)
     i = 0;
     while (i < ft_atol(argv[1]))
     {
-        new_node[i].left = &fork[i];
-        new_node[i].right = &fork[(i + 1) % ft_atol(argv[1])];
+        new_node[i].left = &forks[i];
+        new_node[i].right = &forks[(i + 1) % ft_atol(argv[1])];
         i++;
     }
     return (new_node);

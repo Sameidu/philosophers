@@ -21,6 +21,8 @@ typedef struct s_philo
 	int	tt_sleep;
 	int	tt_thing;
 	int	nb_ph_eat;
+	long long time;
+	struct timeval	start;
 }		t_philo;
 
 // UTILS
@@ -30,12 +32,12 @@ int		ft_error(t_philo *node, char *str);
 void	*ft_print_philo(void *node);
 
 // LIST
-t_philo	*ft_init_args(int argc, char **argv, pthread_mutex_t *fork);
+t_philo	*ft_init_args(int argc, char **argv, pthread_mutex_t *forks);
 
 // INIT
-pthread_mutex_t	*ft_init_fork(int nb);
+pthread_mutex_t	*ft_init_forks(int nb);
 void	ft_init_threads(t_philo *philo);
 void	ft_wait_threads(t_philo *philo);
-void	ft_destroy_mutex(pthread_mutex_t *fork, int nb);
+void	ft_destroy_mutex(pthread_mutex_t *forks, int nb);
 
 #endif

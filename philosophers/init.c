@@ -6,27 +6,27 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:10:06 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/13 13:12:26 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/05/13 20:05:24 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-pthread_mutex_t	*ft_init_fork(int nb)
+pthread_mutex_t	*ft_init_forks(int nb)
 {
-	pthread_mutex_t	*fork;
+	pthread_mutex_t	*forks;
 	int		i;
 
-	fork = (pthread_mutex_t *)malloc(nb * sizeof(pthread_mutex_t));
-	if (!fork)
+	forks = (pthread_mutex_t *)malloc(nb * sizeof(pthread_mutex_t));
+	if (!forks)
 		return (NULL);
 	i = 0;
 	while (i < nb)
 	{
-		pthread_mutex_init(&fork[i], NULL);
+		pthread_mutex_init(&forks[i], NULL);
 		i++;
 	}
-	return (fork);
+	return (forks);
 }
 
 void	ft_init_threads(t_philo *philo)
@@ -53,14 +53,14 @@ void	ft_wait_threads(t_philo *philo)
 	}
 }
 
-void	ft_destroy_mutex(pthread_mutex_t *fork, int nb)
+void	ft_destroy_mutex(pthread_mutex_t *forks, int nb)
 {
 	int	i;
 
 	i = 0;
 	while (i < nb)
 	{
-		pthread_mutex_destroy(&fork[i]);
+		pthread_mutex_destroy(&forks[i]);
 		i++;
 	}
 }
