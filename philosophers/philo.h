@@ -39,10 +39,9 @@ int		ft_error(t_philo *node, char *str);
 void	*ft_print_philo(void *node);
 int ft_time(t_philo *philo);
 
-// LIST
-t_philo	*ft_init_args(int argc, char **argv, t_resources *forks);
-
 // INIT
+t_resources	*ft_init_table(char **argv);
+t_philo	*ft_init_philo(int argc, char **argv, t_resources *forks);
 pthread_mutex_t	*ft_init_forks(int nb);
 void	ft_init_threads(t_philo *philo);
 void	ft_wait_threads(t_philo *philo);

@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 12:02:22 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/13 21:23:07 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/05/14 20:38:49 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void    ft_save_philo(t_philo *node, int i, char **argv, int argc)
 		node[i].nb_ph_eat = -1;
 }
 
-t_philo *ft_init_args(int argc, char **argv, t_resources *forks)
+t_philo *ft_init_philo(int argc, char **argv, t_resources *forks)
 {
     int i;
     int nb_philo;
@@ -54,4 +54,21 @@ t_philo *ft_init_args(int argc, char **argv, t_resources *forks)
         i++;
     }
     return (new_node);
+}
+
+t_resources	*ft_init_table(char **argv)
+{	
+	t_resources	*table;
+	
+	table = malloc(sizeof(t_resources));
+	if (!table)
+		return (ft_error(NULL, "Error: Could not allocate memory for table"), NULL);
+	table->die = malloc(sizeof(pthread_mutex_t));
+	if (!table->die)
+		return (ft_error(NULL, "Error: Could not allocate memory for die"), NULL);
+	table->forks = ft_init_forks(ft_atol(argv[1]));
+	pthread_mutex_init(table->die, NULL);
+	if (!table->forks)
+		return (ft_error(NULL, "Error: Could not initialize forks"), NULL);
+	return (table);
 }

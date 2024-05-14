@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:39:22 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/13 21:25:55 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/05/14 20:38:35 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 // Luego ya todos comparten la misma rutina... Es en el momento de inicio de esta.
 
 // Ah! Y mi código, por alguna razón, tiene comportamientos indefinidos al usar fsanitize=address. 
+// He descubierto que es por el ordenador del trabajo o por el SO. En el portatil furula bien.
 // En el trabajo no me deja usar fsanitize=thread, como aviso a la Sara despistada.
 
 void	*ft_print_philo(void *node)
@@ -61,32 +62,23 @@ int	ft_check_args(int argc, char **argv)
 	return (0);
 }
 
-void	leaks(void)
-{
-	system("leaks -q philo");
-}
-
-// Aqui luego debería refactorizar para separar el inicio de mutex y no quede tan churro.
+// void	leaks(void)
+// {
+// 	system("leaks -q philo");
+// }
 
 int	main(int argc, char **argv)
 {
 	t_resources	*table;
 	t_philo	*philo;
 
-	atexit(leaks);
+	// atexit(leaks);
 	if (ft_check_args(argc, argv))
 		return (1);
-	table = malloc(sizeof(t_resources));
+	table = ft_init_table(argv);
 	if (!table)
-		return (ft_error(NULL, "Error: Could not allocate memory for table"));
-	table->die = malloc(sizeof(pthread_mutex_t));
-	if (!table->die)
-		return (ft_error(NULL, "Error: Could not allocate memory for die"));
-	table->forks = ft_init_forks(ft_atol(argv[1]));
-	pthread_mutex_init(table->die, NULL);
-	if (!table->forks)
-		return (ft_error(NULL, "Error: Could not initialize forks"));
-	philo = ft_init_args(argc, argv, table);
+		return (ft_error(NULL, "Error: Could not initialize table"));
+	philo = ft_init_philo(argc, argv, table);
 	if (!philo)
 		return (ft_error(NULL, "Error: Could not initialize arguments"));
 	ft_init_threads(philo);
