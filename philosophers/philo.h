@@ -9,11 +9,18 @@
 # include <sys/time.h>
 # include <limits.h>
 
+typedef struct s_resources
+{
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	*die;
+}		t_resources;
+
 typedef struct s_philo
 {
 	pthread_t	thread;
 	pthread_mutex_t	*left;
 	pthread_mutex_t	*right;
+	pthread_mutex_t	*die;
 	int	id;
 	int	nb_philo;
 	int	tt_die;
@@ -30,14 +37,15 @@ long	ft_atol(char *str);
 int		ft_isnum(int c);
 int		ft_error(t_philo *node, char *str);
 void	*ft_print_philo(void *node);
+int ft_time(t_philo *philo);
 
 // LIST
-t_philo	*ft_init_args(int argc, char **argv, pthread_mutex_t *forks);
+t_philo	*ft_init_args(int argc, char **argv, t_resources *forks);
 
 // INIT
 pthread_mutex_t	*ft_init_forks(int nb);
 void	ft_init_threads(t_philo *philo);
 void	ft_wait_threads(t_philo *philo);
-void	ft_destroy_mutex(pthread_mutex_t *forks, int nb);
+void	ft_destroy_mutex(t_resources *table, int nb);
 
 #endif

@@ -20,6 +20,7 @@ void    ft_save_philo(t_philo *node, int i, char **argv, int argc)
     node[i].tt_eat = ft_atol(argv[3]);
     node[i].tt_sleep = ft_atol(argv[4]);
     node[i].tt_thing = 0;
+    node[i].time = 0;
     gettimeofday(&node[i].start, NULL);
 	if (argc == 6)
         node[i].nb_ph_eat = ft_atol(argv[5]);
@@ -27,7 +28,7 @@ void    ft_save_philo(t_philo *node, int i, char **argv, int argc)
 		node[i].nb_ph_eat = -1;
 }
 
-t_philo *ft_init_args(int argc, char **argv, pthread_mutex_t *forks)
+t_philo *ft_init_args(int argc, char **argv, t_resources *forks)
 {
     int i;
     int nb_philo;
@@ -41,14 +42,15 @@ t_philo *ft_init_args(int argc, char **argv, pthread_mutex_t *forks)
     while (nb_philo > 0)
 	{
         ft_save_philo(new_node, i, argv, argc);
+        new_node[i].die = forks->die;
         nb_philo--;
         i++;
     }
     i = 0;
     while (i < ft_atol(argv[1]))
     {
-        new_node[i].left = &forks[i];
-        new_node[i].right = &forks[(i + 1) % ft_atol(argv[1])];
+        new_node[i].left = &forks->forks[i];
+        new_node[i].right = &forks->forks[(i + 1) % ft_atol(argv[1])];
         i++;
     }
     return (new_node);

@@ -12,6 +12,15 @@
 
 #include "philo.h"
 
+int ft_time(t_philo *philo)
+{
+	struct timeval init;
+
+	gettimeofday(&init, NULL);
+	return ((init.tv_sec - philo->start.tv_sec) * 1000
+		+ (init.tv_usec - philo->start.tv_usec) / 1000);
+}
+
 int    ft_error(t_philo *node, char *str)
 {
     while (node)

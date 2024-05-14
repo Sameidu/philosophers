@@ -12,21 +12,24 @@
 
 #include "philo.h"
 
-// Tener en cuenta hacer una comprobación para ver si los tenedores están libres (como por ejemplo un booleano para ver si ha sido tomado o no)
-// Hacer un mutex para la comprobación de que todos los filósofos están vivos.(Todos los filósofos vana tener acceso a esta comprobación)
-// Crear una estructura para los datos compartidos entre los filósofos. (Tenedores, estado de los filósofos, etc)
-// Incluir en la estructura de los filosofos timeval para poder calcular los valores de tiempo de meuerte, etc.
-// Para que timeval funcione le tengo que restar el tiempo de inicio a la hora de ejecución. (inicia en 1970)
-// Crear un bucle para que los filósofos coman, duerman y piensen. Donde mueran si no comen a tiempo.
+// Ya sólo me falta crear la rutina, lo que me da miedn hacer.
+// Sé que tengo que gestionar los hilos para que solo la mitad coja uno de los tenedores al comienzo del programa.
+// Pero sin usar la guarrada del usleep, se deberá poder hacer diciendo que sólo los hilos con ID par, por ejemlo
+// cogen el tenedor derecho primero y los impares no hacen nada hasta que termine esta acción.
+// Luego ya todos comparten la misma rutina... Es en el momento de inicio de esta.
 
+// Ah! Y mi código, por alguna razón, tiene comportamientos indefinidos al usar fsanitize=address. 
+// En el trabajo no me deja usar fsanitize=thread, como aviso a la Sara despistada.
 
 void	*ft_print_philo(void *node)
 {
 	t_philo	*philo;
+	long	time;
 
 	philo = node;
-	printf("PHILO THREAD --> %d\nRight fork --> %p\nLeft fork --> %p\nTime --> %ld\nTime 2 --> %ld\n\n",
-	philo->id, philo->right, philo->left, philo->start.tv_sec, philo->start.tv_usec);
+	time = ft_time(philo);
+	printf("PHILO THREAD --> %d\nRight fork --> %p\nLeft fork --> %p\nDie --> %p\nTime --> %ld\n\n",
+	philo->id, philo->right, philo->left, philo->die, time);
 	return (NULL);
 }
 
@@ -63,24 +66,32 @@ void	leaks(void)
 	system("leaks -q philo");
 }
 
+// Aqui luego debería refactorizar para separar el inicio de mutex y no quede tan churro.
+
 int	main(int argc, char **argv)
 {
-	pthread_mutex_t	*forks;
+	t_resources	*table;
 	t_philo	*philo;
 
 	atexit(leaks);
 	if (ft_check_args(argc, argv))
 		return (1);
-	forks = ft_init_forks(ft_atol(argv[1]));
-	if (!forks)
+	table = malloc(sizeof(t_resources));
+	if (!table)
+		return (ft_error(NULL, "Error: Could not allocate memory for table"));
+	table->die = malloc(sizeof(pthread_mutex_t));
+	if (!table->die)
+		return (ft_error(NULL, "Error: Could not allocate memory for die"));
+	table->forks = ft_init_forks(ft_atol(argv[1]));
+	pthread_mutex_init(table->die, NULL);
+	if (!table->forks)
 		return (ft_error(NULL, "Error: Could not initialize forks"));
-	philo = ft_init_args(argc, argv, forks);
+	philo = ft_init_args(argc, argv, table);
 	if (!philo)
 		return (ft_error(NULL, "Error: Could not initialize arguments"));
 	ft_init_threads(philo);
 	ft_wait_threads(philo);
-	ft_destroy_mutex(forks, ft_atol(argv[1]));
-	free(forks);
+	ft_destroy_mutex(table, ft_atol(argv[1]));
 	free(philo);
 	return (0);
 }

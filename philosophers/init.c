@@ -53,14 +53,18 @@ void	ft_wait_threads(t_philo *philo)
 	}
 }
 
-void	ft_destroy_mutex(pthread_mutex_t *forks, int nb)
+void	ft_destroy_mutex(t_resources *table, int nb)
 {
 	int	i;
 
 	i = 0;
 	while (i < nb)
 	{
-		pthread_mutex_destroy(&forks[i]);
+		pthread_mutex_destroy(&table->forks[i]);
 		i++;
 	}
+	free(table->forks);
+	pthread_mutex_destroy(table->die);
+	free(table->die);
+	free(table);
 }
