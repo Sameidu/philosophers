@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:39:22 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/14 20:38:35 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:22:37 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,13 @@
 // He descubierto que es por el ordenador del trabajo o por el SO. En el portatil furula bien.
 // En el trabajo no me deja usar fsanitize=thread, como aviso a la Sara despistada.
 
-void	*ft_print_philo(void *node)
+void	*ft_print_philo(void *thread)
 {
 	t_philo	*philo;
-	long	time;
 
-	philo = node;
-	time = ft_time(philo);
+	philo = thread;
 	printf("PHILO THREAD --> %d\nRight fork --> %p\nLeft fork --> %p\nDie --> %p\nTime --> %ld\n\n",
-	philo->id, philo->right, philo->left, philo->die, time);
+	philo->id, philo->right, philo->left, philo->die, ft_time() - philo->time);
 	return (NULL);
 }
 
@@ -62,17 +60,17 @@ int	ft_check_args(int argc, char **argv)
 	return (0);
 }
 
-// void	leaks(void)
-// {
-// 	system("leaks -q philo");
-// }
+void	leaks(void)
+{
+	system("leaks -q philo");
+}
 
 int	main(int argc, char **argv)
 {
 	t_resources	*table;
 	t_philo	*philo;
 
-	// atexit(leaks);
+	atexit(leaks);
 	if (ft_check_args(argc, argv))
 		return (1);
 	table = ft_init_table(argv);
@@ -81,8 +79,8 @@ int	main(int argc, char **argv)
 	philo = ft_init_philo(argc, argv, table);
 	if (!philo)
 		return (ft_error(NULL, "Error: Could not initialize arguments"));
-	ft_init_threads(philo);
-	ft_wait_threads(philo);
+	ft_init_threads(philo, argv);
+	ft_wait_threads(philo, argv);
 	ft_destroy_mutex(table, ft_atol(argv[1]));
 	free(philo);
 	return (0);

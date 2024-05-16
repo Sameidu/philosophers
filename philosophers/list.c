@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 12:02:22 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/14 20:38:49 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:17:59 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,12 @@
 void    ft_save_philo(t_philo *node, int i, char **argv, int argc)
 {
     node[i].id = i + 1;
-    node[i].nb_philo = ft_atol(argv[1]);
     node[i].tt_die = ft_atol(argv[2]);
     node[i].tt_eat = ft_atol(argv[3]);
     node[i].tt_sleep = ft_atol(argv[4]);
     node[i].tt_thing = 0;
     node[i].time = 0;
-    gettimeofday(&node[i].start, NULL);
+    node[i].time = ft_time();
 	if (argc == 6)
         node[i].nb_ph_eat = ft_atol(argv[5]);
 	else

@@ -6,19 +6,18 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 10:58:31 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/13 20:29:01 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/05/16 12:49:42 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int ft_time(t_philo *philo)
+int ft_time(void)
 {
-	struct timeval init;
+	t_time init;
 
 	gettimeofday(&init, NULL);
-	return ((init.tv_sec - philo->start.tv_sec) * 1000
-		+ (init.tv_usec - philo->start.tv_usec) / 1000);
+	return (init.tv_sec * 1000 + init.tv_usec / 1000);
 }
 
 int    ft_error(t_philo *node, char *str)

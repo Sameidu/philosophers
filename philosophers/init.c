@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:10:06 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/13 20:05:24 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:20:38 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,24 @@ pthread_mutex_t	*ft_init_forks(int nb)
 	return (forks);
 }
 
-void	ft_init_threads(t_philo *philo)
+void	ft_init_threads(t_philo *philo, char **argv)
 {
 	int	i;
 
 	i = 0;
-	while (i < philo->nb_philo)
+	while (i < ft_atol(argv[1]))
 	{
 		pthread_create(&(philo[i].thread), NULL, ft_print_philo, &(philo[i]));
 		i++;
 	}
 }
 
-void	ft_wait_threads(t_philo *philo)
+void	ft_wait_threads(t_philo *philo, char **argv)
 {
 	int	i;
 
 	i = 0;
-	while (i < philo->nb_philo)
+	while (i < ft_atol(argv[1]))
 	{
 		pthread_join(philo[i].thread, NULL);
 		i++;
