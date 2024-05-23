@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:10:06 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/23 12:17:18 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/05/23 19:27:15 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 pthread_mutex_t	*ft_init_forks(int nb)
 {
 	pthread_mutex_t	*forks;
-	int		i;
+	int				i;
 
 	forks = (pthread_mutex_t *)malloc(nb * sizeof(pthread_mutex_t));
 	if (!forks)
@@ -66,5 +66,7 @@ void	ft_destroy_mutex(t_resources *table, int nb)
 	free(table->forks);
 	pthread_mutex_destroy(table->die);
 	free(table->die);
+	pthread_mutex_destroy(table->write);
+	free(table->write);
 	free(table);
 }

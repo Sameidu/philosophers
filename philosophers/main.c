@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:39:22 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/23 13:16:43 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/05/23 19:22:43 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,17 @@ int	ft_check_args(int argc, char **argv)
 	return (0);
 }
 
-void	leaks(void)
-{
-	system("leaks -q philo");
-}
+// void	leaks(void)
+// {
+// 	system("leaks -q philo");
+// }
 
 int	main(int argc, char **argv)
 {
 	t_resources	*table;
-	t_philo	*philo;
+	t_philo		*philo;
 
-	atexit(leaks);
+	// atexit(leaks);
 	if (ft_check_args(argc, argv))
 		return (1);
 	table = ft_init_table(argv);

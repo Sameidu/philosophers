@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:11:39 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/23 13:14:28 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/05/23 19:32:41 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,26 @@ void	ft_im_dead(t_philo *philo)
 			pthread_mutex_unlock(philo->die);
 			return ;
 		}
-		printf("Philosopher %d died\n", philo->id);
+		ft_msg(philo, "dead");
 		*(philo->ph_dead) = 1;
 	}
 	pthread_mutex_unlock(philo->die);
+}
+
+void	ft_pick_fork(t_philo *philo)
+{
+	if (philo->id % 2 == 0)
+	{
+		pthread_mutex_lock(philo->left);
+		pthread_mutex_lock(philo->right);
+		ft_msg(philo, "fork");
+	}
+	else
+	{
+		pthread_mutex_lock(philo->right);
+		pthread_mutex_lock(philo->left);
+		ft_msg(philo, "fork");
+	}
 }
 
 int	ft_eat(t_philo *philo)
@@ -33,16 +49,7 @@ int	ft_eat(t_philo *philo)
 	ft_im_dead(philo);
 	if (*(philo->ph_dead) == 1)
 		return (1);
-	if (philo->id % 2 == 0)
-	{
-		pthread_mutex_lock(philo->left);
-		pthread_mutex_lock(philo->right);
-	}
-	else
-	{
-		pthread_mutex_lock(philo->right);
-		pthread_mutex_lock(philo->left);
-	}
+	ft_pick_fork(philo);
 	ft_im_dead(philo);
 	if (*(philo->ph_dead) == 1)
 	{
@@ -50,7 +57,7 @@ int	ft_eat(t_philo *philo)
 		pthread_mutex_unlock(philo->left);
 		return (1);
 	}
-	printf("%ld %d is eating\n", ft_time() - philo->time, philo->id);
+	ft_msg(philo, "eat");
 	usleep(philo->tt_eat * 1000);
 	philo->time = ft_time();
 	pthread_mutex_unlock(philo->right);
@@ -63,11 +70,11 @@ int	ft_sleep(t_philo *philo)
 	ft_im_dead(philo);
 	if (*(philo->ph_dead) == 1)
 		return (1);
-	printf("%ld %d is sleeping\n", ft_time() - philo->time, philo->id);
+	ft_msg(philo, "sleep");
 	usleep(philo->tt_sleep * 1000);
 	if (*(philo->ph_dead) == 1)
 		return (1);
-	printf("%ld %d is thinking\n", ft_time() - philo->time, philo->id);
+	ft_msg(philo, "think");
 	return (0);
 }
 

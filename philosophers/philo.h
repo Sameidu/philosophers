@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/23 19:04:36 by smeixoei          #+#    #+#             */
+/*   Updated: 2024/05/23 19:06:05 by smeixoei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
@@ -15,31 +27,34 @@ typedef struct s_resources
 {
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	*die;
+	pthread_mutex_t	*write;
 	int				ph_dead;
 }		t_resources;
 
 typedef struct s_philo
 {
-	pthread_t	thread;
+	pthread_t		thread;
 	pthread_mutex_t	*left;
 	pthread_mutex_t	*right;
 	pthread_mutex_t	*die;
-	int	*ph_dead;
-	int	id;
-	int	tt_die;
-	int	tt_eat;
-	int	tt_sleep;
-	int	tt_thing;
-	int	nb_ph_eat;
-	long time;
+	pthread_mutex_t	*write;
+	int				*ph_dead;
+	int				id;
+	int				tt_die;
+	int				tt_eat;
+	int				tt_sleep;
+	int				tt_thing;
+	int				nb_ph_eat;
+	long			time;
 }		t_philo;
 
 // UTILS
-long	ft_atol(char *str);
-int		ft_isnum(int c);
-int		ft_error(t_philo *node, char *str);
-void	*ft_routine(void *thread);
-int 	ft_time(void);
+long			ft_atol(char *str);
+int				ft_isnum(int c);
+int				ft_error(t_philo *node, char *str);
+void			*ft_routine(void *thread);
+int				ft_time(void);
+void			ft_msg(t_philo *thread, char *str);
 
 // INIT
 t_resources		*ft_init_table(char **argv);
