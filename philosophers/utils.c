@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 10:58:31 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/23 19:22:05 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/05/23 22:12:54 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ void	ft_msg(t_philo *thread, char *str)
 	time = ft_time() - philo->time;
 	pthread_mutex_lock(philo->write);
 	if (*(philo->ph_dead) == 1)
+	{
+		pthread_mutex_unlock(philo->write);
 		return ;
+	}
 	if (!strncmp(str, "fork", 3))
 		printf("\033[0;33m%ld %d has taken a fork\n", time, philo->id);
 	if (!strncmp(str, "eat", 3))
