@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 12:02:22 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/16 13:17:59 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/05/23 11:06:23 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void    ft_save_philo(t_philo *node, int i, char **argv, int argc)
     node[i].tt_eat = ft_atol(argv[3]);
     node[i].tt_sleep = ft_atol(argv[4]);
     node[i].tt_thing = 0;
-    node[i].time = 0;
     node[i].time = ft_time();
 	if (argc == 6)
         node[i].nb_ph_eat = ft_atol(argv[5]);
@@ -27,7 +26,7 @@ void    ft_save_philo(t_philo *node, int i, char **argv, int argc)
 		node[i].nb_ph_eat = -1;
 }
 
-t_philo *ft_init_philo(int argc, char **argv, t_resources *forks)
+t_philo *ft_init_philo(int argc, char **argv, t_resources *table)
 {
     int i;
     int nb_philo;
@@ -41,15 +40,16 @@ t_philo *ft_init_philo(int argc, char **argv, t_resources *forks)
     while (nb_philo > 0)
 	{
         ft_save_philo(new_node, i, argv, argc);
-        new_node[i].die = forks->die;
+        new_node[i].die = table->die;
+        new_node[i].ph_dead = &table->ph_dead;
         nb_philo--;
         i++;
     }
     i = 0;
     while (i < ft_atol(argv[1]))
     {
-        new_node[i].left = &forks->forks[i];
-        new_node[i].right = &forks->forks[(i + 1) % ft_atol(argv[1])];
+        new_node[i].left = &table->forks[i];
+        new_node[i].right = &table->forks[(i + 1) % ft_atol(argv[1])];
         i++;
     }
     return (new_node);
@@ -65,9 +65,10 @@ t_resources	*ft_init_table(char **argv)
 	table->die = malloc(sizeof(pthread_mutex_t));
 	if (!table->die)
 		return (ft_error(NULL, "Error: Could not allocate memory for die"), NULL);
-	table->forks = ft_init_forks(ft_atol(argv[1]));
 	pthread_mutex_init(table->die, NULL);
+	table->forks = ft_init_forks(ft_atol(argv[1]));
 	if (!table->forks)
 		return (ft_error(NULL, "Error: Could not initialize forks"), NULL);
+    table->ph_dead = 0;
 	return (table);
 }

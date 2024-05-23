@@ -15,6 +15,7 @@ typedef struct s_resources
 {
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	*die;
+	int				ph_dead;
 }		t_resources;
 
 typedef struct s_philo
@@ -23,6 +24,7 @@ typedef struct s_philo
 	pthread_mutex_t	*left;
 	pthread_mutex_t	*right;
 	pthread_mutex_t	*die;
+	int	*ph_dead;
 	int	id;
 	int	tt_die;
 	int	tt_eat;
@@ -36,7 +38,7 @@ typedef struct s_philo
 long	ft_atol(char *str);
 int		ft_isnum(int c);
 int		ft_error(t_philo *node, char *str);
-void	*ft_print_philo(void *thread);
+void	*ft_routine(void *thread);
 int 	ft_time(void);
 
 // INIT

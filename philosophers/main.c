@@ -6,31 +6,11 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:39:22 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/16 13:22:37 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/05/23 13:16:43 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-// Ya sólo me falta crear la rutina, lo que me da miedn hacer.
-// Sé que tengo que gestionar los hilos para que solo la mitad coja uno de los tenedores al comienzo del programa.
-// Pero sin usar la guarrada del usleep, se deberá poder hacer diciendo que sólo los hilos con ID par, por ejemlo
-// cogen el tenedor derecho primero y los impares no hacen nada hasta que termine esta acción.
-// Luego ya todos comparten la misma rutina... Es en el momento de inicio de esta.
-
-// Ah! Y mi código, por alguna razón, tiene comportamientos indefinidos al usar fsanitize=address. 
-// He descubierto que es por el ordenador del trabajo o por el SO. En el portatil furula bien.
-// En el trabajo no me deja usar fsanitize=thread, como aviso a la Sara despistada.
-
-void	*ft_print_philo(void *thread)
-{
-	t_philo	*philo;
-
-	philo = thread;
-	printf("PHILO THREAD --> %d\nRight fork --> %p\nLeft fork --> %p\nDie --> %p\nTime --> %ld\n\n",
-	philo->id, philo->right, philo->left, philo->die, ft_time() - philo->time);
-	return (NULL);
-}
 
 int	ft_check_args(int argc, char **argv)
 {

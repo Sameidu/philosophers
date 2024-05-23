@@ -7,6 +7,7 @@ SRC		=	./philosophers/main.c \
 			./philosophers/utils.c \
 			./philosophers/list.c \
 			./philosophers/init.c \
+			./philosophers/routine.c \
 
 CR	=	\033[0;31m
 CG	=	\033[0;32m

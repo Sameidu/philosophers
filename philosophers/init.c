@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:10:06 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/16 13:20:38 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/05/23 12:17:18 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_init_threads(t_philo *philo, char **argv)
 	i = 0;
 	while (i < ft_atol(argv[1]))
 	{
-		pthread_create(&(philo[i].thread), NULL, ft_print_philo, &(philo[i]));
+		pthread_create(&(philo[i].thread), NULL, ft_routine, &(philo[i]));
 		i++;
 	}
 }
