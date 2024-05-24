@@ -61,6 +61,8 @@ int	main(int argc, char **argv)
 		return (ft_error(NULL, "Error: Could not initialize arguments"));
 	ft_init_threads(philo, argv);
 	ft_wait_threads(philo, argv);
+	if (table->ph_dead == 0)
+		printf("All Philos have eaten %ld times\n", ft_atol(argv[5]));
 	ft_destroy_mutex(table, ft_atol(argv[1]));
 	free(philo);
 	return (0);

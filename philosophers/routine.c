@@ -34,13 +34,19 @@ void	ft_pick_fork(t_philo *philo)
 	{
 		pthread_mutex_lock(philo->left);
 		pthread_mutex_lock(philo->right);
+		ft_im_dead(philo);
 		ft_msg(philo, "fork");
+		pthread_mutex_unlock(philo->right);
+		pthread_mutex_unlock(philo->left);
 	}
 	else
 	{
 		pthread_mutex_lock(philo->right);
 		pthread_mutex_lock(philo->left);
+		ft_im_dead(philo);
 		ft_msg(philo, "fork");
+		pthread_mutex_unlock(philo->right);
+		pthread_mutex_unlock(philo->left);
 	}
 }
 
