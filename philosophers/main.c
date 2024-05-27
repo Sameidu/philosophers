@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:39:22 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/23 19:22:43 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/05/27 18:54:16 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ int	ft_check_args(int argc, char **argv)
 		i++;
 	}
 	if (ft_atol(argv[1]) <= 1 || ft_atol(argv[1]) > 200)
-		return (ft_error(NULL, "Error: Number of philoz is not between 1 and 200"));
+		return (ft_error(NULL, "Error: Number of philos is not between 1 and 200"));
 	if (ft_atol(argv[2]) < 60 || ft_atol(argv[3]) < 60 || ft_atol(argv[4]) < 60)
 		return (ft_error(NULL, "Error: Time to die, eat or sleep is less than 60"));
 	if (argc == 6 && (ft_atol(argv[5]) < 1 || ft_atol(argv[5]) > INT_MAX))
-		return (ft_error(NULL, "Error: Number of times to eat is not between 1 and INT_MAX"));
+		return (ft_error(NULL, "Error: Number of times to eat"));
 	return (0);
 }
 
