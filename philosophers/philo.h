@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 19:04:36 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/23 19:06:05 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/05/27 18:54:21 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ typedef struct s_philo
 	int				tt_die;
 	int				tt_eat;
 	int				tt_sleep;
-	int				tt_thing;
 	int				nb_ph_eat;
 	long			time;
+	long			last_eat;
 }		t_philo;
 
 // UTILS
@@ -55,6 +55,8 @@ int				ft_error(t_philo *node, char *str);
 void			*ft_routine(void *thread);
 int				ft_time(void);
 void			ft_msg(t_philo *thread, char *str);
+int				ft_im_alive(t_philo *philo);
+void			ft_im_dead(t_philo *philo);
 
 // INIT
 t_resources		*ft_init_table(char **argv);

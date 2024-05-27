@@ -1,6 +1,6 @@
 NAME	=	philo
 CC		=	gcc
-CFLAGS	=	-Wall -Wextra -Werror -pthread -g3 -fsanitize=address
+CFLAGS	=	-Wall -Wextra -Werror -pthread -g3 -fsanitize=thread
 RM		=	rm -f
 OBJ		=	$(SRC:.c=.o)
 SRC		=	./philosophers/main.c \
@@ -8,6 +8,7 @@ SRC		=	./philosophers/main.c \
 			./philosophers/list.c \
 			./philosophers/init.c \
 			./philosophers/routine.c \
+			./philosophers/status.c \
 
 CR	=	\033[0;31m
 CG	=	\033[0;32m

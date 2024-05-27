@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 10:58:31 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/23 22:12:54 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/05/27 18:54:22 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,32 +34,6 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 		i++;
 	}
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-}
-
-void	ft_msg(t_philo *thread, char *str)
-{
-	t_philo	*philo;
-	long	time;
-
-	philo = thread;
-	time = ft_time() - philo->time;
-	pthread_mutex_lock(philo->write);
-	if (*(philo->ph_dead) == 1)
-	{
-		pthread_mutex_unlock(philo->write);
-		return ;
-	}
-	if (!strncmp(str, "fork", 3))
-		printf("\033[0;33m%ld %d has taken a fork\n", time, philo->id);
-	if (!strncmp(str, "eat", 3))
-		printf("\033[0;32m%ld %d is eating\n", time, philo->id);
-	if (!strncmp(str, "sleep", 5))
-		printf("\033[0;36m%ld %d is sleeping\n", time, philo->id);
-	if (!strncmp(str, "think", 5))
-		printf("\033[0;35m%ld %d is thinking\n", time, philo->id);
-	if (!strncmp(str, "dead", 4))
-		printf("\033[0;31mPhilosopher %d died\n", philo->id);
-	pthread_mutex_unlock(philo->write);
 }
 
 int	ft_error(t_philo *node, char *str)
