@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 19:04:36 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/27 18:54:21 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:46:04 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,12 @@ typedef struct s_philo
 	pthread_t		thread;
 	pthread_mutex_t	*left;
 	pthread_mutex_t	*right;
-	pthread_mutex_t	*die;
-	pthread_mutex_t	*write;
-	int				*ph_dead;
+	t_resources		*table;
+	// pthread_mutex_t	*die;
+	// pthread_mutex_t	*write;
+	// int				*ph_dead;
+	int				f_right;
+	int				f_left;
 	int				id;
 	int				tt_die;
 	int				tt_eat;
@@ -57,6 +60,7 @@ int				ft_time(void);
 void			ft_msg(t_philo *thread, char *str);
 int				ft_im_alive(t_philo *philo);
 void			ft_im_dead(t_philo *philo);
+void			ft_wait_to_die(t_philo *philo);
 
 // INIT
 t_resources		*ft_init_table(char **argv);
