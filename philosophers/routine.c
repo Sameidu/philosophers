@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:11:39 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/29 13:16:10 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/05/29 17:15:24 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	ft_pick_first(t_philo *philo)
 
 void	ft_pick_second(t_philo *philo)
 {
-	if (ft_im_alive(philo))
+	if (ft_im_dead(philo))
 	{
 		ft_unlock_fork(philo);
 		return ;
@@ -90,14 +90,12 @@ void	ft_pick_second(t_philo *philo)
 
 int	ft_eat(t_philo *philo)
 {
-	ft_im_dead(philo);
-	if (ft_im_alive(philo))
+	if (ft_im_dead(philo))
 		return (1);
 	ft_pick_first(philo);
 	ft_im_dead(philo);
 	ft_pick_second(philo);
-	ft_im_dead(philo);
-	if (!ft_im_alive(philo))
+	if (!ft_im_dead(philo))
 	{
 		if (philo->f_left == 1 && philo->f_right == 1)
 		{
@@ -114,17 +112,20 @@ int	ft_eat(t_philo *philo)
 
 int	ft_sleep(t_philo *philo)
 {
-	ft_im_dead(philo);
-	if (ft_im_alive(philo))
+	if (ft_im_dead(philo))
 		return (1);
 	ft_msg(philo, "sleep");
 	usleep(philo->tt_sleep * 1000);
-	ft_im_dead(philo);
-	if (ft_im_alive(philo))
+	if (ft_im_dead(philo))
 		return (1);
 	ft_msg(philo, "think");
 	return (0);
 }
+
+// int	ft_nap(t_philo *philo)
+// {
+	
+// }
 
 void	*ft_routine(void *thread)
 {
@@ -133,8 +134,7 @@ void	*ft_routine(void *thread)
 	philo = thread;
 	while (philo->nb_ph_eat != 0)
 	{
-		ft_im_dead(philo);
-		if (ft_im_alive(philo))
+		if (ft_im_dead(philo))
 			break ;
 		if (ft_eat(philo))
 			break ;

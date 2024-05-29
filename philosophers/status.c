@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 18:48:05 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/29 13:06:34 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/05/29 16:47:05 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_msg(t_philo *thread, char *str)
 	philo = thread;
 	time = ft_time() - philo->time;
 	pthread_mutex_lock(philo->table->write);
-	if (ft_im_alive(philo))
+	if (ft_im_dead(philo))
 	{
 		pthread_mutex_unlock(philo->table->write);
 		return ;
@@ -36,43 +36,36 @@ void	ft_msg(t_philo *thread, char *str)
 	pthread_mutex_unlock(philo->table->write);
 }
 
-int	ft_im_alive(t_philo *philo)
+int	ft_im_dead(t_philo *philo)
 {
+	long	time;
+
+	time = ft_time() - philo->time;
 	pthread_mutex_lock(philo->table->die);
 	if (philo->table->ph_dead == 1)
 	{
 		pthread_mutex_unlock(philo->table->die);
 		return (1);
 	}
-	pthread_mutex_unlock(philo->table->die);
-	return (0);
-}
-
-void	ft_im_dead(t_philo *philo)
-{
-	long	time;
-
-	time = ft_time() - philo->time;
-	pthread_mutex_lock(philo->table->die);
 	if (ft_time() - philo->last_eat > philo->tt_die)
 	{
 		if (philo->table->ph_dead == 1)
 		{
 			pthread_mutex_unlock(philo->table->die);
-			return ;
+			return (1);
 		}
 		printf("\033[0;31m%ld %d died\n", time, philo->id);
 		philo->table->ph_dead = 1;
 	}
 	pthread_mutex_unlock(philo->table->die);
+	return (0);
 }
 
 void	ft_wait_to_die(t_philo *philo)
 {
 	while (1)
 	{
-		ft_im_dead(philo);
-		if (ft_im_alive(philo))
+		if (ft_im_dead(philo))
 			break ;
 	}
 }
