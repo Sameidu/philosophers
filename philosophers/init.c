@@ -6,13 +6,13 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:10:06 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/27 18:54:28 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/05/30 20:37:44 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-pthread_mutex_t	*ft_init_forks(int nb)
+pthread_mutex_t	*ft_init_forks(long nb)
 {
 	pthread_mutex_t	*forks;
 	int				i;

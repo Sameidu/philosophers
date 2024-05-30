@@ -5,10 +5,11 @@ RM		=	rm -f
 OBJ		=	$(SRC:.c=.o)
 SRC		=	./philosophers/main.c \
 			./philosophers/utils.c \
-			./philosophers/list.c \
+			./philosophers/data.c \
 			./philosophers/init.c \
 			./philosophers/routine.c \
 			./philosophers/status.c \
+			./philosophers/fork.c \
 
 CR	=	\033[0;31m
 CG	=	\033[0;32m
