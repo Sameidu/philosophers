@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:51:23 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/30 20:54:20 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/06/03 18:26:50 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ void	ft_pick_first(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
 	{
-		if (*(philo->f_left) == 1)
-			return ;
 		pthread_mutex_lock(philo->left);
 		*(philo->f_left) = 1;
 		ft_im_dead(philo);
@@ -55,8 +53,6 @@ void	ft_pick_first(t_philo *philo)
 	}
 	else
 	{
-		if (*(philo->f_right) == 1)
-			return ;
         pthread_mutex_lock(philo->right);
 		*(philo->f_right) = 1;
 		ft_im_dead(philo);
@@ -75,8 +71,6 @@ void	ft_pick_second(t_philo *philo)
 	}
 	if (philo->id % 2 == 0)
 	{
-		if (*(philo->f_right) == 1)
-			return ;
 		pthread_mutex_lock(philo->right);
 		*(philo->f_right) = 1;
 		ft_im_dead(philo);
@@ -84,8 +78,6 @@ void	ft_pick_second(t_philo *philo)
 	}
 	else
 	{
-		if (*(philo->f_left) == 1)
-			return ;
 		pthread_mutex_lock(philo->left);
 		*(philo->f_left) = 1;
 		ft_im_dead(philo);
