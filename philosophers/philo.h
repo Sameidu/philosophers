@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 19:04:36 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/30 20:49:13 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/06/05 21:12:45 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void			ft_msg(t_philo *thread, char *str);
 int				ft_im_dead(t_philo *philo);
 void			ft_wait_to_die(t_philo *philo);
 void			ft_unlock_fork(t_philo *philo);
-void			ft_pick_first(t_philo *philo);
-void			ft_pick_second(t_philo *philo);
+int				ft_pick_left(int *fork, pthread_mutex_t *mutex);
+int				ft_pick_right(int *fork, pthread_mutex_t *mutex);
 
 // INIT
 t_resources		*ft_init_table(char **argv);

@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:51:23 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/06/05 19:56:07 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/06/05 21:13:06 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,45 +42,32 @@ void	ft_unlock_fork(t_philo *philo)
 	}
 }
 
-void	ft_pick_first(t_philo *philo)
+int	ft_pick_left(int *fork, pthread_mutex_t *mutex)
 {
-	if (philo->id % 2 == 0)
+	int	status;
+
+	status = 0;
+	pthread_mutex_lock(mutex);
+	if (fork == 0)
 	{
-		pthread_mutex_lock(philo->left);
-		*(philo->f_left) = 1;
-		ft_im_dead(philo);
-		ft_msg(philo, "fork");
+		*(fork) = 1;
+		status = 1;
 	}
-	else
-	{
-        pthread_mutex_lock(philo->right);
-		*(philo->f_right) = 1;
-		ft_im_dead(philo);
-		ft_msg(philo, "fork");
-	}
-    if (philo->left == philo->right)
-		ft_wait_to_die(philo);
+	pthread_mutex_unlock(mutex);
+	return (status);
 }
 
-void	ft_pick_second(t_philo *philo)
+int	ft_pick_right(int *fork, pthread_mutex_t *mutex)
 {
-	if (ft_im_dead(philo))
+	int	status;
+
+	status = 0;
+	pthread_mutex_lock(mutex);
+	if (fork == 0)
 	{
-		ft_unlock_fork(philo);
-		return ;
+		*(fork) = 1;
+		status = 1;
 	}
-	if (philo->id % 2 == 0)
-	{
-		pthread_mutex_lock(philo->right);
-		*(philo->f_right) = 1;
-		ft_im_dead(philo);
-		ft_msg(philo, "fork");
-	}
-	else
-	{
-		pthread_mutex_lock(philo->left);
-		*(philo->f_left) = 1;
-		ft_im_dead(philo);
-		ft_msg(philo, "fork");
-	}
+	pthread_mutex_unlock(mutex);
+	return (status);
 }
