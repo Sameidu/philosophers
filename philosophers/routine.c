@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:11:39 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/06/03 14:02:10 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/06/05 19:39:02 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	ft_sleep(t_philo *philo)
 		return (1);
 	ft_msg(philo, "think");
 	if (philo->id % 2 == 1)
-		usleep(750);
+		usleep(650);
 	return (0);
 }
 
@@ -53,7 +53,7 @@ void	*ft_routine(void *thread)
 	t_philo	*philo;
 
 	philo = thread;
-	while (philo->nb_ph_eat != 0)
+	while (philo->nb_ph_eat != 0 && !ft_im_dead(philo))
 	{
 		if (ft_im_dead(philo))
 			break ;
