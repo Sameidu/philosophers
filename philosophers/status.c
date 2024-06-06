@@ -6,26 +6,55 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 18:48:05 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/06/05 20:59:50 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/06/06 12:33:12 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	ft_msg(t_philo *thread, char *str)
+void	ft_dead(t_philo *philo)
 {
-	t_philo	*philo;
-	long	time;
+	pthread_mutex_lock(philo->table->die);
+	philo->table->ph_dead = 1;
+	pthread_mutex_unlock(philo->table->die);
+}
 
-	philo = thread;
-	time = ft_time() - philo->time;
-	pthread_mutex_lock(philo->table->write);
-	if (!strncmp(str, "dead", 4))
+int	ft_im_dead(t_philo *philo)
+{
+	int	status;
+
+	status = 0;
+	pthread_mutex_lock(philo->table->die);
+	status = philo->table->ph_dead;
+	pthread_mutex_unlock(philo->table->die);
+	return (status);
+}
+
+int	check_philo_dead(t_philo *philo)
+{
+	t_time	current_time;
+	long long		time_since_ate;
+
+	gettimeofday(&current_time, NULL);
+	time_since_ate = (current_time.tv_sec - philo->last_eat->tv_sec) * 1000;
+	time_since_ate += (current_time.tv_usec - philo->last_eat->tv_usec) / 1000;
+	if (time_since_ate > philo->tt_die)
 	{
-		printf("\033[0;31m%ld %d died\n", time, philo->id);
-		pthread_mutex_unlock(philo->table->write);
-		return ;
+		ft_msg(philo, "dead");
+		return (1);
 	}
+	return (0);
+}
+
+void	ft_msg(t_philo *philo, char *str)
+{
+	long	time;
+	t_time	current_time;
+
+	gettimeofday(&current_time, NULL);
+	time = (current_time.tv_sec - philo->time->tv_sec) * 1000;
+	time += (current_time.tv_usec - philo->time->tv_usec) / 1000;
+	pthread_mutex_lock(philo->table->write);
 	if (ft_im_dead(philo))
 	{
 		pthread_mutex_unlock(philo->table->write);
@@ -39,41 +68,10 @@ void	ft_msg(t_philo *thread, char *str)
 		printf("\033[0;36m%ld %d is sleeping\n", time, philo->id);
 	if (!strncmp(str, "think", 5))
 		printf("\033[0;35m%ld %d is thinking\n", time, philo->id);
+	if (!strncmp(str, "dead", 4))
+	{
+		printf("\033[0;31m%ld %d died\n", time, philo->id);
+		ft_dead(philo);
+	}
 	pthread_mutex_unlock(philo->table->write);
-}
-
-int	ft_im_dead(t_philo *philo)
-{
-	// long	time;
-
-	// time = ft_time() - philo->time;
-	pthread_mutex_lock(philo->table->die);
-	if (philo->table->ph_dead == 1)
-	{
-		pthread_mutex_unlock(philo->table->die);
-		return (1);
-	}
-	if (ft_time() - philo->last_eat > philo->tt_die)
-	{
-		if (philo->table->ph_dead == 1)
-		{
-			pthread_mutex_unlock(philo->table->die);
-			return (1);
-		}
-		philo->table->ph_dead = 1;
-		pthread_mutex_unlock(philo->table->die);
-		ft_msg(philo, "dead");
-		return (0);
-	}
-	pthread_mutex_unlock(philo->table->die);
-	return (0);
-}
-
-void	ft_wait_to_die(t_philo *philo)
-{
-	while (1)
-	{
-		if (ft_im_dead(philo))
-			break ;
-	}
 }

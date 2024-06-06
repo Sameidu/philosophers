@@ -6,18 +6,31 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 10:58:31 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/29 19:11:51 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/06/06 12:43:06 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_time(void)
+void	ft_usleep(long long useconds, t_philo *philo)
 {
-	t_time	init;
+	struct timeval	start_time;
+	struct timeval	curr_time;
+	long long		start_time_u;
+	long long		curr_time_u;
 
-	gettimeofday(&init, NULL);
-	return (init.tv_sec * 1000 + init.tv_usec / 1000);
+	gettimeofday(&start_time, NULL);
+	start_time_u = start_time.tv_sec * 1000000 + start_time.tv_usec;
+	gettimeofday(&curr_time, NULL);
+	curr_time_u = curr_time.tv_sec * 1000000 + curr_time.tv_usec;
+	while (curr_time_u - start_time_u < useconds)
+	{
+		usleep(500);
+		if (philo && (ft_im_dead(philo) || check_philo_dead(philo)))
+			break ;
+		gettimeofday(&curr_time, NULL);
+		curr_time_u = curr_time.tv_sec * 1000000 + curr_time.tv_usec;
+	}
 }
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)

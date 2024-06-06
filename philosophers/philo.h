@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 19:04:36 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/06/05 21:12:45 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/06/06 12:42:32 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,10 @@ typedef struct s_philo
 	int				tt_die;
 	int				tt_eat;
 	int				tt_sleep;
+	int				tt_thing;
 	int				nb_ph_eat;
-	long			time;
-	long			last_eat;
+	t_time			*time;
+	t_time			*last_eat;
 }		t_philo;
 
 // UTILS
@@ -54,13 +55,12 @@ long			ft_atol(char *str);
 int				ft_isnum(int c);
 int				ft_error(t_philo *node, char *str);
 void			*ft_routine(void *thread);
-int				ft_time(void);
 void			ft_msg(t_philo *thread, char *str);
 int				ft_im_dead(t_philo *philo);
-void			ft_wait_to_die(t_philo *philo);
-void			ft_unlock_fork(t_philo *philo);
-int				ft_pick_left(int *fork, pthread_mutex_t *mutex);
-int				ft_pick_right(int *fork, pthread_mutex_t *mutex);
+void			ft_unlock_fork(int *fork, pthread_mutex_t *mutex);
+int				ft_pick_fork(int *fork, pthread_mutex_t *mutex);
+int				check_philo_dead(t_philo *philo);
+void	ft_usleep(long long useconds, t_philo *philo);
 
 // INIT
 t_resources		*ft_init_table(char **argv);

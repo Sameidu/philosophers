@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list.c                                             :+:      :+:    :+:   */
+/*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 12:02:22 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/30 21:05:18 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/06/06 12:25:25 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,17 @@ void	ft_save_philo(t_philo *node, int i, char **argv, int argc)
 	node[i].tt_die = ft_atol(argv[2]);
 	node[i].tt_eat = ft_atol(argv[3]);
 	node[i].tt_sleep = ft_atol(argv[4]);
+	node[i].tt_thing = node[i].tt_eat - node[i].tt_sleep + 2;
 	node[i].f_left = 0;
 	node[i].f_right = 0;
-	node[i].time = ft_time();
-	node[i].last_eat = ft_time();
+	node[i].time = malloc(sizeof(t_time));
+	if (!node[i].time)
+		ft_error(node, "Error: No memory for time");
+	gettimeofday(node[i].time, NULL);
+	node[i].last_eat = malloc(sizeof(t_time));
+	if (!node[i].last_eat)
+		ft_error(node, "Error: No memory for last_eat");
+	gettimeofday(node[i].last_eat, NULL);
 	if (argc == 6)
 		node[i].nb_ph_eat = ft_atol(argv[5]);
 	else
