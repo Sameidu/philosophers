@@ -6,30 +6,29 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 10:58:31 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/06/06 12:43:06 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/06/07 13:09:56 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	ft_usleep(long long useconds, t_philo *philo)
+void	ft_nap(long long useconds, t_philo *philo)
 {
-	struct timeval	start_time;
-	struct timeval	curr_time;
-	long long		start_time_u;
-	long long		curr_time_u;
+	struct timeval	start;
+	struct timeval	current;
+	long long		init;
+	long long		present;
 
-	gettimeofday(&start_time, NULL);
-	start_time_u = start_time.tv_sec * 1000000 + start_time.tv_usec;
-	gettimeofday(&curr_time, NULL);
-	curr_time_u = curr_time.tv_sec * 1000000 + curr_time.tv_usec;
-	while (curr_time_u - start_time_u < useconds)
+	gettimeofday(&start, NULL);
+	init = start.tv_sec * 1000000 + start.tv_usec;
+	while (1)
 	{
-		usleep(500);
-		if (philo && (ft_im_dead(philo) || check_philo_dead(philo)))
+		gettimeofday(&current, NULL);
+		present = current.tv_sec * 1000000 + current.tv_usec;
+		if ((present - init >= useconds) 
+		|| (philo && (ft_im_dead(philo) || check_philo_dead(philo))))
 			break ;
-		gettimeofday(&curr_time, NULL);
-		curr_time_u = curr_time.tv_sec * 1000000 + curr_time.tv_usec;
+		usleep(500);
 	}
 }
 
@@ -49,13 +48,10 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
-int	ft_error(t_philo *node, char *str)
+int	ft_error(void *node, char *str)
 {
-	while (node)
-	{
-		if (node)
+	if (node)
 			free(node);
-	}
 	printf("%s\n", str);
 	return (1);
 }

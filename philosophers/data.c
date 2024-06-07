@@ -6,13 +6,13 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 12:02:22 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/06/06 12:25:25 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/06/07 12:50:48 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	ft_save_philo(t_philo *node, int i, char **argv, int argc)
+static void	ft_save_philo(t_philo *node, int i, char **argv, int argc)
 {
 	node[i].id = i + 1;
 	node[i].tt_die = ft_atol(argv[2]);
@@ -64,7 +64,7 @@ t_philo	*ft_init_philo(int argc, char **argv, t_resources *table)
 	return (new_node);
 }
 
-int	*ft_id_fork(long nb)
+static int	*ft_id_fork(long nb)
 {
 	int	i;
 	int	*fork;

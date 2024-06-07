@@ -6,13 +6,13 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:39:22 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/05/30 19:57:19 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/06/07 12:48:59 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_check_args(int argc, char **argv)
+static int	ft_check_args(int argc, char **argv)
 {
 	int	i;
 	int	j;

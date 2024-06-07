@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 19:04:36 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/06/06 12:42:32 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/06/07 12:58:35 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,16 @@ typedef struct s_philo
 // UTILS
 long			ft_atol(char *str);
 int				ft_isnum(int c);
-int				ft_error(t_philo *node, char *str);
-void			*ft_routine(void *thread);
-void			ft_msg(t_philo *thread, char *str);
-int				ft_im_dead(t_philo *philo);
-void			ft_unlock_fork(int *fork, pthread_mutex_t *mutex);
-int				ft_pick_fork(int *fork, pthread_mutex_t *mutex);
-int				check_philo_dead(t_philo *philo);
-void	ft_usleep(long long useconds, t_philo *philo);
+int				ft_error(void *node, char *str);
+void			ft_nap(long long useconds, t_philo *philo);
 
-// INIT
+// ROUTINE
+void			*ft_routine(void *thread);
+int				ft_im_dead(t_philo *philo);
+int				check_philo_dead(t_philo *philo);
+void			ft_msg(t_philo *thread, char *str);
+
+// INIT & DESTROY
 t_resources		*ft_init_table(char **argv);
 t_philo			*ft_init_philo(int argc, char **argv, t_resources *forks);
 pthread_mutex_t	*ft_init_forks(long nb);
