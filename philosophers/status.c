@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 18:48:05 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/06/07 13:13:46 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/06/07 13:19:40 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ int	check_philo_dead(t_philo *philo)
 void	ft_msg(t_philo *philo, char *str)
 {
 	long	time;
-	t_time	current_time;
+	t_time	current;
 
-	gettimeofday(&current_time, NULL);
-	time = (current_time.tv_sec - philo->time->tv_sec) * 1000;
-	time += (current_time.tv_usec - philo->time->tv_usec) / 1000;
+	gettimeofday(&current, NULL);
+	time = (current.tv_sec - philo->time->tv_sec) * 1000;
+	time += (current.tv_usec - philo->time->tv_usec) / 1000;
 	pthread_mutex_lock(philo->table->write);
 	if (ft_im_dead(philo))
 	{
