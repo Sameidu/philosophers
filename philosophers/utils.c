@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 10:58:31 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/06/07 13:09:56 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/06/07 20:46:25 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	ft_nap(long long useconds, t_philo *philo)
 	{
 		gettimeofday(&current, NULL);
 		present = current.tv_sec * 1000000 + current.tv_usec;
-		if ((present - init >= useconds) 
-		|| (philo && (ft_im_dead(philo) || check_philo_dead(philo))))
+		if ((present - init >= useconds)
+			|| (philo && (ft_im_dead(philo) || check_philo_dead(philo))))
 			break ;
 		usleep(500);
 	}
@@ -51,7 +51,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 int	ft_error(void *node, char *str)
 {
 	if (node)
-			free(node);
+		free(node);
 	printf("%s\n", str);
 	return (1);
 }

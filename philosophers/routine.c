@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:11:39 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/06/07 13:18:42 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/06/07 20:53:51 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ static int	ft_pick_fork(int *fork, pthread_mutex_t *mutex)
 
 static void	ft_eat(t_philo *philo)
 {
+	if (philo->f_left == philo->f_right)
+		ft_msg(philo, "fork");
 	while (1)
 	{
 		if (ft_im_dead(philo) || check_philo_dead(philo))

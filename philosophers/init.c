@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:10:06 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/06/07 11:36:42 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/06/07 20:45:19 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ void	ft_init_threads(t_philo *philo, char **argv)
 	i = 0;
 	while (i < ft_atol(argv[1]))
 	{
-		if (pthread_create(&(philo[i].thread), NULL, ft_routine, &(philo[i])) != 0)
+		if (pthread_create(&(philo[i].thread), NULL,
+				ft_routine, &(philo[i])) != 0)
 		{
 			while (i > 0)
 			{
@@ -67,6 +68,8 @@ void	ft_wait_threads(t_philo *philo, char **argv)
 	while (i < ft_atol(argv[1]))
 	{
 		pthread_join(philo[i].thread, NULL);
+		free(philo[i].last_eat);
+		free(philo[i].time);
 		i++;
 	}
 }
@@ -82,6 +85,7 @@ void	ft_destroy_mutex(t_resources *table, int nb)
 		i++;
 	}
 	free(table->forks);
+	free(table->take_fork);
 	pthread_mutex_destroy(table->die);
 	free(table->die);
 	pthread_mutex_destroy(table->write);

@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 18:48:05 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/06/07 13:19:40 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/06/07 20:51:25 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	check_philo_dead(t_philo *philo)
 	return (0);
 }
 
-void	ft_msg(t_philo *philo, char *str)
+int	ft_msg(t_philo *philo, char *str)
 {
 	long	time;
 	t_time	current;
@@ -56,10 +56,7 @@ void	ft_msg(t_philo *philo, char *str)
 	time += (current.tv_usec - philo->time->tv_usec) / 1000;
 	pthread_mutex_lock(philo->table->write);
 	if (ft_im_dead(philo))
-	{
-		pthread_mutex_unlock(philo->table->write);
-		return ;
-	}
+		return (pthread_mutex_unlock(philo->table->write), 1);
 	if (!strncmp(str, "fork", 4))
 		printf("\033[0;33m%ld %d has taken a fork\n", time, philo->id);
 	if (!strncmp(str, "eat", 3))
@@ -74,4 +71,5 @@ void	ft_msg(t_philo *philo, char *str)
 		ft_dead(philo);
 	}
 	pthread_mutex_unlock(philo->table->write);
+	return (0);
 }

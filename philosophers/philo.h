@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 19:04:36 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/06/07 12:58:35 by smeixoei         ###   ########.fr       */
+/*   Updated: 2024/06/07 20:51:42 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void			ft_nap(long long useconds, t_philo *philo);
 void			*ft_routine(void *thread);
 int				ft_im_dead(t_philo *philo);
 int				check_philo_dead(t_philo *philo);
-void			ft_msg(t_philo *thread, char *str);
+int				ft_msg(t_philo *thread, char *str);
 
 // INIT & DESTROY
 t_resources		*ft_init_table(char **argv);
