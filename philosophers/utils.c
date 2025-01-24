@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 10:58:31 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/06/07 20:46:25 by smeixoei         ###   ########.fr       */
+/*   Updated: 2025/01/24 14:01:53 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_nap(long long useconds, t_philo *philo)
 			|| (philo && (ft_im_dead(philo) || check_philo_dead(philo))))
 			break ;
 		usleep(500);
-	}
+	} 
 }
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)

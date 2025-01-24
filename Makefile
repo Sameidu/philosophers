@@ -18,7 +18,7 @@ CCY	=	\033[0;36m
 RC	=	\033[0m
 
 $(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) -o $@ $^
+	@$(CC) $(CFLAGS) -o $@ $^ 
 	@echo "$(CG)$(NAME) has been created.$(RC)"
 
 all: $(NAME)

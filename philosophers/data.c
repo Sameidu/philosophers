@@ -6,11 +6,11 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 12:02:22 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/06/07 12:50:48 by smeixoei         ###   ########.fr       */
+/*   Updated: 2025/01/24 14:01:43 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo.h" 
 
 static void	ft_save_philo(t_philo *node, int i, char **argv, int argc)
 {

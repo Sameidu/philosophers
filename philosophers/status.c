@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 18:48:05 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/06/07 20:51:25 by smeixoei         ###   ########.fr       */
+/*   Updated: 2025/01/24 14:01:49 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	check_philo_dead(t_philo *philo)
 	t_time			time;
 	long long		starvation;
 
-	gettimeofday(&time, NULL);
+	gettimeofday(&time, NULL); 
 	starvation = (time.tv_sec - philo->last_eat->tv_sec) * 1000;
 	starvation += (time.tv_usec - philo->last_eat->tv_usec) / 1000;
 	if (starvation > philo->tt_die)

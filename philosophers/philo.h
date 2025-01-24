@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 19:04:36 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/06/07 20:51:42 by smeixoei         ###   ########.fr       */
+/*   Updated: 2025/01/24 14:01:35 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int				ft_im_dead(t_philo *philo);
 int				check_philo_dead(t_philo *philo);
 int				ft_msg(t_philo *thread, char *str);
 
-// INIT & DESTROY
+// INIT & DESTROY 
 t_resources		*ft_init_table(char **argv);
 t_philo			*ft_init_philo(int argc, char **argv, t_resources *forks);
 pthread_mutex_t	*ft_init_forks(long nb);

@@ -6,11 +6,11 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:10:06 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/06/07 20:45:19 by smeixoei         ###   ########.fr       */
+/*   Updated: 2025/01/24 14:01:40 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo.h" 
 
 pthread_mutex_t	*ft_init_forks(long nb)
 {
