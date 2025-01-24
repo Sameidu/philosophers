@@ -6,7 +6,7 @@
 /*   By: smeixoei <smeixoei@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:39:22 by smeixoei          #+#    #+#             */
-/*   Updated: 2024/06/07 20:49:12 by smeixoei         ###   ########.fr       */
+/*   Updated: 2025/01/24 13:56:50 by smeixoei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static int	ft_check_args(int argc, char **argv)
 		}
 		i++;
 	}
+	if (ft_atol(argv[1]) < 1 || ft_atol(argv[1]) > INT_MAX)
+		return (ft_error(NULL, "Error: Number of philosophers"));
 	if (ft_atol(argv[2]) < 60 || ft_atol(argv[3]) < 60
 		|| ft_atol(argv[4]) < 60)
 		return (ft_error(NULL, "Error: Time < 60 for die/eat/sleep"));
